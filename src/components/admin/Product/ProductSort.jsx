@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useProductContext } from "../../../context/ProductContext";
 
 const ProductSort = () => {
-
+  const { product } = useProductContext();
   return (
     <Box>
       <Box className="container">
@@ -15,11 +15,17 @@ const ProductSort = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            background: "none",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <Typography sx={{ fontSize: "27px", fontWeight: "bold" }}>
-              Все виды (999+)
+              Все виды ({product.length})
             </Typography>
             <Link to="/addcoffee">
               <AddIcon />

@@ -1,8 +1,14 @@
 * {
   margin: 0;
   padding: 0;
+  background-color: rgba(215, 198, 192, 0.096);
+  /* color: aliceblue; */
 }
 .container {
   width: 94%;
   margin: 0 auto;
+}
+a {
+  text-decoration: none;
+  color: rgb(77, 33, 15);
 }

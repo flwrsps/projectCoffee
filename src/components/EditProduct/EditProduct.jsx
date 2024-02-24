@@ -1,24 +1,43 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import logo from "..//..//../image/images_coffee.png";
-import { useProductContext } from "../../../context/ProductContext";
-import { Link } from "react-router-dom";
+import logo from "..//..//image/images_coffee.png";
+// import { useProductContext } from "../../../context/ProductContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { useProductContext } from "../../context/ProductContext";
 
-const AddCoffee = () => {
-  const { addProduct } = useProductContext();
+const EditProduct = () => {
+  const { getOneProduct, oneProduct, editProduct } = useProductContext();
+  const { id } = useParams();
+
+  useEffect(() => {
+    getOneProduct(id);
+  }, []);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
 
-  function addContext() {
-    let obj = {
+  useEffect(() => {
+    if (oneProduct) {
+      setImage(oneProduct.image || "");
+      setName(oneProduct.name || "");
+      setPrice(oneProduct.price || 0);
+    }
+  }, [oneProduct]);
+
+  const navigate = useNavigate();
+
+  function createContext() {
+    let newObj = {
       name: name,
       price: price,
       image: image,
     };
-    addProduct(obj);
+
+    editProduct(id, newObj);
+
+    navigate("/");
   }
 
   return (
@@ -57,7 +76,7 @@ const AddCoffee = () => {
             }}
           >
             <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
-              Add product
+              Edit product
             </Typography>
             <TextField
               sx={{
@@ -70,6 +89,7 @@ const AddCoffee = () => {
               multiline
               maxRows={4}
               variant="filled"
+              value={image}
             />
             <TextField
               sx={{
@@ -82,6 +102,7 @@ const AddCoffee = () => {
               multiline
               maxRows={4}
               variant="filled"
+              value={name}
             />
             <TextField
               sx={{
@@ -94,12 +115,11 @@ const AddCoffee = () => {
               multiline
               maxRows={4}
               variant="filled"
+              value={price}
             />
-
             <button
-              onClick={addContext}
+              onClick={createContext}
               style={{
-                width: "100%",
                 height: "50px",
                 border: "none",
                 background: "rgb(77, 33, 15)",
@@ -117,4 +137,4 @@ const AddCoffee = () => {
   );
 };
 
-export default AddCoffee;
+export default EditProduct;
